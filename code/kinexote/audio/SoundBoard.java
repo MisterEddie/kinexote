@@ -33,12 +33,13 @@ public class SoundBoard {
 		gain1 = new Gain(5);
 		sampleBuffer = new MultiChannelBuffer(1, 1024);
 		sampler = new Sampler(sampleBuffer, 44100, 1);
+		sampler.looping = true;
 		bypassedDelay = new Bypass<Delay>(delay1);
-		bypassedDelay.activate();
+		bypassedDelay.deactivate();
 		bypassedFilter = new Bypass<MoogFilter>(filter1);
-		bypassedFilter.activate();
+		bypassedFilter.deactivate();
 		bypassedGain = new Bypass<Gain>(gain1);
-		bypassedGain.activate();
+		bypassedGain.deactivate();
 		sampler.patch(bypassedDelay).patch(bypassedFilter).patch(bypassedGain).patch(this.out);
 	}
 
@@ -48,13 +49,8 @@ public class SoundBoard {
 	}
 
 	public void record() {
-		if (recorder.isRecording()) {
-			recorder.endRecord();
-			System.out.println("Stopped recording");
-		} else {
 			recorder.beginRecord();
 			System.out.println("Recording");
-		}
 	}
 
 	public void recordState() {
@@ -66,6 +62,7 @@ public class SoundBoard {
 	}
 
 	public void save() {
+		recorder.endRecord();
 		recorder.save();
 		float sampleRate = this.minim.loadFileIntoBuffer(filename, sampleBuffer);
 		int correctBufferSize = sampleBuffer.getBufferSize();
@@ -79,11 +76,10 @@ public class SoundBoard {
 	 * @param gain 0-127
 	 */
 	public void setGain(int gain) {
-		gain /= 4.2333333333;
-		gain -= 15;
+		int adjGain = (int) ((gain / 4.23333333) - 15);
 
-		System.out.printf("Gain: %f dB\n", gain);
-		gain1.setValue(gain);
+		System.out.printf("Gain: %d dB\n", adjGain);
+		gain1.setValue(adjGain);
 	}
 
 	/**
@@ -91,9 +87,9 @@ public class SoundBoard {
 	 * @param reverb 0-127
 	 */
 	public void setReverb(int reverb) {
-		reverb /= 141.1;
-		System.out.printf("Reverb: %f factor \n", reverb);
-		delay1.setDelAmp(reverb);
+		float adjReverb = (float)(reverb / 141.1);
+		System.out.printf("Reverb: %f factor \n", adjReverb);
+		delay1.setDelAmp(adjReverb);
 	}
 
 	/**
@@ -101,7 +97,7 @@ public class SoundBoard {
 	 * @param freq 0-127
 	 */
 	public void setFilterFreq(int freq) {
-		freq = (int) (20 * Math.pow(10, freq / 42.4));
+		freq = (int) (20 * Math.pow(10, freq / 42.4)) + 100;
 		System.out.printf("Cutoff Freq: %d Hz\n", freq);
 		filter1.frequency.setLastValue(freq);
 	}
