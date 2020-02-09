@@ -3,13 +3,10 @@
  */
 package kinexote;
 
-import java.util.ArrayList;
-
-import ddf.minim.AudioSample;
 import ddf.minim.Minim;
-
+import kinexote.audio.SoundBoard;
+import kinexote.sensor.Frame;
 import processing.core.PApplet;
-import processing.event.MouseEvent;
 
 /**
  * @author billie
@@ -18,34 +15,24 @@ import processing.event.MouseEvent;
 public class Kinexote extends PApplet {
 
 	private Minim minim;
-	private AudioSample snare;
+	private SoundBoard soundboard;
 
-	private ArrayList<Ball> balls = new ArrayList<>();
-
-	public void settings() { 
+	public void settings() {
 		size(500, 500);
-		balls.add(new Ball(this, width / 2, height / 2));
-		minim = new Minim(this);
 	}
 
 	public void setup() {
-		snare = minim.loadSample("res/SD.wav", 512);
-		if (snare == null)
-			System.out.println("Didn't get snare!");
+		minim = new Minim(this);
+		soundboard = new SoundBoard(minim);
 	}
 
 	public void draw() {
-		background(64);
-		for (Ball b : balls) {
-			b.step();
-			b.render();
-		}
-		this.circle(mouseX, mouseY, 10);
+		this.delay(50);
+		newFrame(new Frame());
 	}
-
-	public void mousePressed(MouseEvent mouseEvent) {
-		snare.trigger();
-		balls.add(new Ball(this, mouseX, mouseY));
+	
+	public void newFrame(Frame frame) {
+		System.out.println("New Frame");
 	}
 
 	public static void main(String[] args) {
