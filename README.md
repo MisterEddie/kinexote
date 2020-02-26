@@ -6,3 +6,9 @@ Kinexote tracks arm movements and gestures to select and customize the audio you
 
 ## How We Built It
 An Xbox Kinect was interfaced with the open source Processing programming platform to track the user's arm and hand position to alter the audio. We also tracked certain specific gestures, such as closing and opening the fist to start/stop recording audio. After the tracking data is received, the Minim library contained within Processing was used for Digital Signal Processing, e.g. manipulating sound clips that are inputted into the program. We used a Shure SM57 and Focusrite Scarlett 2i2 for the hardware to input audio.
+
+![Picture1](https://github.com/MisterEddie/kinexote/blob/master/pictures/kinexote.png)
+![Picture2](https://github.com/MisterEddie/kinexote/blob/master/pictures/_DSC7055.jpg)
+![Picture3](https://github.com/MisterEddie/kinexote/blob/master/pictures/_DSC7392.jpg)
+
+
