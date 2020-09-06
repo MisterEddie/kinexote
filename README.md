@@ -1,5 +1,5 @@
 # kinexote
-An innovative, multimedia product aimed to connecting body movements with visuals and sounds for an immersive experience.
+An innovative, multimedia product aimed to connecting body movements with visuals and sounds for an immersive experience.  Please see more here: https://devpost.com/software/kinectnote
 
 ## What it Does
 Kinexote tracks arm movements and gestures to select and customize the audio you input to your liking—for example, applying reverb, filters, or different amounts of gain. The audio output then affects visuals on screen, from various amplitude representations to different colors and shapes based on frequency content.
